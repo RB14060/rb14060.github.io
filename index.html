@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WordMaster Games</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <h1 id="wordmaster-games">WordMaster Games</h1>
+    <p></p>
+<h2 id="worddle">Worddle</h2>
+<h3 id="to-start-worddle-easy-medium-hard-evil-stop-stats-">To start: <code>^worddle [easy|medium|hard|evil | stop|stats]</code></h3>
+<pre><code>Play a Worddle game.  With no argument, a new game will <span class="hljs-keyword">start</span> <span class="hljs-keyword">with</span> easy difficulty.
+<span class="hljs-keyword">If</span> a game <span class="hljs-keyword">is</span> already started, you will <span class="hljs-keyword">join</span> the game <span class="hljs-keyword">in</span> progress.
+
+<span class="hljs-keyword">In</span> addition, you may <span class="hljs-keyword">use</span> the <span class="hljs-keyword">following</span> subcommands:
+
+    easy     <span class="hljs-keyword">minimum</span> acceptable word <span class="hljs-keyword">length</span>: <span class="hljs-number">3</span> (overrides config)
+    <span class="hljs-keyword">medium</span>   <span class="hljs-keyword">minimum</span> acceptable word <span class="hljs-keyword">length</span>: <span class="hljs-number">4</span>      <span class="hljs-string">"       "</span>
+    hard     <span class="hljs-keyword">minimum</span> acceptable word <span class="hljs-keyword">length</span>: <span class="hljs-number">5</span>      <span class="hljs-string">"       "</span>
+    evil     <span class="hljs-keyword">minimum</span> acceptable word <span class="hljs-keyword">length</span>: <span class="hljs-number">6</span>      <span class="hljs-string">"       "</span>
+    <span class="hljs-keyword">stop</span>     <span class="hljs-keyword">Stop</span> a currently running game (<span class="hljs-keyword">alias</span> <span class="hljs-keyword">for</span> @wordquit)
+    stats    Display <span class="hljs-keyword">some</span> post-game <span class="hljs-keyword">statistics</span> about the board
+</code></pre><p>Worddle is a clone of a well-known puzzle game involving a 4x4 grid of
+randomly-placed letters.  It&#39;s a timed, multiplayer game where you compete
+to find words that your opponents didn&#39;t find.</p>
+<p>When you start a new game, or join an existing game, the bot will send you a
+private message indicating that you are playing.  All your guesses must be
+sent to the bot in this private conversation, so your opponents can&#39;t see your
+guesses.  At the end of the game, the results will be presented in the channel
+where the game was started.</p>
+<p>To be a valid guess, words must:</p>
+<ul>
+<li>be made of adjacent letters on the board (in all 8 directions, diagonals ok)</li>
+<li>be at least 3 letters in length (or 4, or 5, etc. depending on the level)</li>
+<li>appear in the dictionary file.</li>
+</ul>
+<p>At the end of the game, if a word was found by multiple players, it is not
+counted.  The remaining words contribute to your score using these values:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Length</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3, 4</td>
+<td>1 point</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2 points</td>
+</tr>
+<tr>
+<td>6</td>
+<td>3 points</td>
+</tr>
+<tr>
+<td>7</td>
+<td>5 points</td>
+</tr>
+<tr>
+<td>8+</td>
+<td>11 points</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h2 id="wordshrink">WordShrink</h2>
+<h3 id="to-start-wordshrink-">To start: <code>^wordshrink</code></h3>
+<p>WordShrink and WordTwist are word chain (or word ladder) style games.
+A puzzle will be presented in the form:</p>
+<pre><code><span class="hljs-comment">word1</span> &gt; <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> &gt; <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> &gt; <span class="hljs-comment">word4</span>
+</code></pre><p>... and your job is to come up with a response of the form <code>word2 &gt; word3</code>
+that completes the puzzle.  (You can optionally include the start and end
+words in your response, as long as each word is separated by a greater-than
+sign.)</p>
+<p>In WordShrink, each word must be made by removing one letter from the
+preceding word and rearranging the letters to form a new word.  Example
+session:</p>
+<pre><code>    <span class="hljs-symbol">&lt;mike&gt;</span> ^wordshrink
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordShrink: lights &gt; ----- &gt; ---- &gt; sit
+    <span class="hljs-symbol">&lt;supybot&gt;</span> (<span class="hljs-number">12</span> possible solutions)
+    <span class="hljs-symbol">&lt;mike&gt;</span> sight &gt; this
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordShrink: mike got it!
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordShrink: lights &gt; sight &gt; this &gt; sit
+    <span class="hljs-symbol">&lt;ben&gt;</span> lights &gt; hilts &gt; hits &gt; sit
+    <span class="hljs-symbol">&lt;supybot&gt;</span> ben: Your solution <span class="hljs-keyword">is</span> also valid.
+</code></pre><p></p><h2 id="wordtwist">WordTwist</h2>
+<h3 id="to-start-wordtwist-">To start: <code>^wordtwist</code></h3>
+<p>WordTwist is very similar to WordShrink, except that the way you manipulate
+the words to solve the puzzle is changed.  In WordTwist, you change exactly
+one letter in each successive word to form a new word (no rearranging is
+allowed).  Example session:</p>
+<pre><code>    <span class="hljs-symbol">&lt;mike&gt;</span> ^wordtwist medium
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordTwis<span class="hljs-variable">t:</span> mass &gt; ---- &gt; ---- &gt; ---- &gt; jade
+    <span class="hljs-symbol">&lt;supybot&gt;</span> (<span class="hljs-number">5</span> possible solutions)
+    <span class="hljs-symbol">&lt;mike&gt;</span> mars &gt; mare &gt; made
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordTwis<span class="hljs-variable">t:</span> mike got it!
+    <span class="hljs-symbol">&lt;supybot&gt;</span> WordTwis<span class="hljs-variable">t:</span> mass &gt; mars &gt; mare &gt; made &gt; jade
+</code></pre>
+  </body>
+</html>
